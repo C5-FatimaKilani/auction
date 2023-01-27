@@ -17,7 +17,7 @@ const AllProducts = () => {
       .get("http://localhost:5000/products")
       .then((result) => {
         console.log(result);
-        dispatch(setProducts(result.data.products));
+        dispatch(setProducts(result.data.result));
       })
       .catch((err) => {});
   };
@@ -31,7 +31,15 @@ const AllProducts = () => {
       AllProducts
       {products.length &&
         products.map((product) => {
-          return { product };
+          return (
+            <div>
+              <p>{product.user_product_id
+}</p>
+            <p>{  product.productName} </p>
+            <img src={product.image}/>
+            </div>
+           
+          )
         })}
     </div>
   );
