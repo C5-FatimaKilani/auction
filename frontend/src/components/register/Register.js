@@ -9,7 +9,7 @@ const Register = () => {
   const [lastName, setLastName] = useState(``);
   const [phoneNum, setPhoneNum] = useState(``);
   const [email, setEmail] = useState(``);
-  const [role_id, setRole_id] = useState(` `);
+  const [role_id, setRole_id] = useState(``);
   const [pass, setPass] = useState(``);
   const [message, setMessage] = useState(``);
   const [messageEmail, setMessageEmail] = useState("");
@@ -24,9 +24,11 @@ const Register = () => {
     };
   });
 
-  const addNewUser = () => {
+  const addNewUser = async (e) => {
+    e.preventDefault();
+    console.log({ firstName, lastName, email, phoneNum, pass, role_id });
     try {
-      const res = axios.post(`https://localhost:5000/register`, {
+      const res = await axios.post(`http://localhost:5000/register`, {
         firstName,
         lastName,
         email,
@@ -34,6 +36,7 @@ const Register = () => {
         pass,
         role_id,
       });
+      console.log(res);
       if (
         res &&
         firstName.replaceAll(" ", "").length != 0 &&
@@ -70,6 +73,7 @@ const Register = () => {
                   type="text"
                   placeholder="Enter your first Name ..."
                   onChange={(e) => {
+                    setFirstName(e.target.value);
                     if (e.target.value == " " || e.target.value.includes(" ")) {
                       return setMessagefName(
                         "  الرجاء إدخال الإسم الأول من مقطع واحد"
@@ -93,6 +97,8 @@ const Register = () => {
                   type="text"
                   placeholder="Enter your Last Name ..."
                   onChange={(e) => {
+                    setLastName(e.target.value);
+
                     if (e.target.value == " " || e.target.value.includes(" ")) {
                       return setMessagelName(
                         "  الرجاء إدخال الإسم الأول من مقطع واحد"
@@ -116,6 +122,8 @@ const Register = () => {
                   type="email"
                   placeholder="Enter email"
                   onChange={(e) => {
+                    setEmail(e.target.value);
+
                     if (
                       e.target.value == " " ||
                       e.target.value == "" ||
@@ -150,6 +158,8 @@ const Register = () => {
                   type="number"
                   placeholder="Enter your phone number ..."
                   onChange={(e) => {
+                    setPhoneNum(e.target.value);
+
                     if (e.target.value == " " || e.target.value == "") {
                       return setMessagePhone("   Can not be empty");
                     } else if (e.target.value != " " && e.target.value != "") {
@@ -168,6 +178,8 @@ const Register = () => {
                   type="password"
                   placeholder="Password"
                   onChange={(e) => {
+                    setPass(e.target.value);
+
                     if (
                       e.target.value.length < 8 ||
                       e.target.value == " " ||
@@ -202,7 +214,7 @@ const Register = () => {
                     <Form.Check
                       inline
                       label="Seller"
-                      value="1"
+                      value={1}
                       name="group1"
                       type={type}
                       id={`inline-${type}-1`}
@@ -210,7 +222,7 @@ const Register = () => {
                     <Form.Check
                       inline
                       label="Buyer"
-                      value="2"
+                      value={2}
                       name="group1"
                       type={type}
                       id={`inline-${type}-2`}
@@ -223,7 +235,7 @@ const Register = () => {
                 variant="primary"
                 type="submit"
                 onClick={(e) => {
-                  addNewUser();
+                  addNewUser(e);
                 }}
               >
                 Submit

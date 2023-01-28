@@ -3,14 +3,14 @@ import React, {useState, useEffect} from 'react'
 import { setAuctions, addNewAuction} from "../../redux/reducers/auction"
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from "react-router-dom";
-import {products,  setProducts, setProductByID, addNewProduct } from '../../redux/reducers/products';
+import {setProducts } from '../../redux/reducers/products';
 
 const ProductPage = () => {
   const [auction, setAuction] = useState([]);
   const { id } = useParams();
   const dispatch = useDispatch();
 
-const {auctions, token} = useSelector((state)=> {
+const {auctions,products, token} = useSelector((state)=> {
   return{
     auctions:state.auctions.auctions,
     token: state.auth.token,
