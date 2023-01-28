@@ -1,9 +1,9 @@
 import axios from 'axios'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { setAuctions, addNewAuction} from "../../redux/reducers/auction"
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from "react-router-dom";
-import products, { setProducts } from '../../redux/reducers/products';
+import {products,  setProducts, setProductByID, addNewProduct } from '../../redux/reducers/products';
 
 const ProductPage = () => {
   const [auction, setAuction] = useState([]);
@@ -14,6 +14,7 @@ const {auctions, token} = useSelector((state)=> {
   return{
     auctions:state.auctions.auctions,
     token: state.auth.token,
+    products:state.products.products
   }
   
 })
@@ -28,10 +29,10 @@ await axios.get(`http://localhost:5000/auction/${id}`)
 });
   };
 
-  const addAuction = async(id) => {
+  const addAuction = async(id, auction) => {
 await axios.post(`http://localhost:5000/auction/${id}`,
 {
-  price,
+  price:auction,
 },
 {
   headers: {
@@ -85,7 +86,7 @@ getAuctions(id);
                       
                       onClick={() => {
                         addNewAuction(auction.id);
-                        setClicked(!clicked);
+                       
                       }}
                     >
                       Add

@@ -52,8 +52,7 @@ console.log("added");
 
   return (
     <div>
-      
-      
+     
       <Button variant="primary" onClick={handleShow}>
         Add Product
       </Button>
